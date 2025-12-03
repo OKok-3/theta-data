@@ -1,6 +1,6 @@
 [project]
-name = "theat-data"
-version = "0.1.0"
+name = "theta-data"
+version = "1.0.0"
 requires-python = ">=3.14"
 dependencies = [
     "httpx>=0.28.1",
