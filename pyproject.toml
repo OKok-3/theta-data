@@ -8,3 +8,44 @@ dependencies = [
     "ruff>=0.14.7",
     "s3fs>=2025.12.0",
 ]
+
+[tool.ruff]
+# Same as Black.
+line-length = 144
+indent-width = 4
+
+# Assume Python 3.13 (Ruff may not explicitly support 3.14 yet)
+target-version = "py313"
+
+[tool.ruff.lint]
+# Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
+# I: Isort (import sorting)
+# B: Flake8-bugbear (common bugs)
+# UP: Pyupgrade (modernize syntax)
+# SIM: Flake8-simplify (code simplification)
+select = ["E4", "E7", "E9", "F", "I", "B", "UP", "SIM"]
+ignore = []
+
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
