@@ -14,8 +14,7 @@ dependencies = [
 line-length = 144
 indent-width = 4
 
-# Assume Python 3.13 (Ruff may not explicitly support 3.14 yet)
-target-version = "py313"
+target-version = "py314"
 
 [tool.ruff.lint]
 # Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
