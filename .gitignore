@@ -1,5 +1,5 @@
 **/.DS_Store
-**/.parquet
+**/*.parquet
 **/.venv
 **/.ruff_cache
 **/.env
