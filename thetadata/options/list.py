@@ -7,20 +7,40 @@ if TYPE_CHECKING:
 
 
 class OptionsList:
-    """Endpoint module for the options list endpoint"""
+    """Endpoint module for the options list endpoint.
+
+    This module contains all the endpoints for the options list endpoint.
+
+    Attributes:
+        - `client`: The `ThetaDataClient` instance that this module belongs to.
+        - `httpx_client`: The `httpx` client instance that this module uses to make requests to the Theta Data API.
+
+    Methods:
+        - `symbols`: Lists all symbols that are available for options.
+        - `dates`: Lists all dates of data that are available for an option with a given symbol, request type, and expiration.
+        - `expirations`: Lists all dates of expirations that are available for an option with a given symbol.
+        - `strikes`: Lists all strikes that are available for an option with a given symbol and expiration date.
+        - `contracts`: Lists all contracts that were traded or quoted on a particular date.
+    """
+
+    client: ThetaDataClient
+    httpx_client: httpx.Client
 
     def __init__(self, client: ThetaDataClient) -> None:
         self.client = client
         self.httpx_client = client.httpx_client
 
     def symbols(self, format: str = "ndjson") -> httpx.Response:
-        """A symbol can be defined as a unique identifier for a stock / underlying asset. Common terms also include: root, ticker, and underlying. This endpoint returns all traded symbols for options. This endpoint is updated overnight.
+        """
+        Lists all symbols for options.
+
+        A `symbol` can be defined as a unique identifier for a stock / underlying asset. Common terms also include: root, ticker, and underlying. This endpoint returns all traded symbols for options. This endpoint is updated overnight.
 
         Args:
-            format: Format of the response (default: "ndjson")
+            - `format`: Format of the response (optional, default: `"ndjson"`)
 
         Returns:
-            httpx.Response: The HTTP response object.
+            - `httpx.Response`: The `httpx` response object.
         """
         path = "/option/list/symbols"
         params = {"format": format}
@@ -45,15 +65,15 @@ class OptionsList:
         This endpoint is updated overnight.
 
         Args:
-            symbol: Symbol of the underlying asset
-            expiration: Expiration date of the option
-            strike: Strike price of the option (optional, default: "*". E.g., "100.00", "$100.00", or "*" for all strikes)
-            right: Right of the option (optional, default: "both")
-            request_type: Type of request ("trade" or "quote")
-            format: Format of the response (default: "ndjson")
+            - `symbol`: Symbol of the underlying asset
+            - `expiration`: Expiration date of the option
+            - `strike`: Strike price of the option (optional, default: `"*"`. E.g., `"100.00"`, `"$100.00"`, or `"*"` for all strikes)
+            - `right`: Right of the option (optional, default: `"both"`)
+            - `request_type`: Type of request (`"trade"` or `"quote"`)
+            - `format`: Format of the response (optional, default: `"ndjson"`)
 
         Returns:
-            httpx.Response: The HTTP response object.
+            - `httpx.Response`: The `httpx` response object.
         """
         path = f"/option/list/dates/{request_type}"
         params = {
@@ -76,11 +96,11 @@ class OptionsList:
         This endpoint is updated overnight.
 
         Args:
-            symbol: Symbol of the underlying asset
-            format: Format of the response (default: "ndjson")
+            - `symbol`: Symbol of the underlying asset
+            - `format`: Format of the response (optional, default: `"ndjson"`)
 
         Returns:
-            httpx.Response: The HTTP response object.
+            - `httpx.Response`: The `httpx` response object.
         """
         path = "/option/list/expirations"
         params = {"symbol": symbol, "format": format}
@@ -96,12 +116,12 @@ class OptionsList:
         This endpoint is updated overnight.
 
         Args:
-            symbol: Symbol of the underlying asset
-            expiration: Expiration date of the option
-            format: Format of the response (default: "ndjson")
+            - `symbol`: Symbol of the underlying asset
+            - `expiration`: Expiration date of the option
+            - `format`: Format of the response (optional, default: `"ndjson"`)
 
         Returns:
-            httpx.Response: The HTTP response object.
+            - `httpx.Response`: The `httpx` response object.
         """
         path = "/option/list/strikes"
         params = {"symbol": symbol, "expiration": expiration, "format": format}
@@ -119,10 +139,13 @@ class OptionsList:
         This endpoint is updated real-time.
 
         Args:
-            symbol: Symbol of the underlying asset (optional)
-            date: Date of the contract
-            request_type: Type of request ("trade" or "quote")
-            format: Format of the response (default: "ndjson")
+            - `symbol`: Symbol of the underlying asset (optional)
+            - `date`: Date of the contract
+            - `request_type`: Type of request (`"trade"` or `"quote"`)
+            - `format`: Format of the response (optional, default: `"ndjson"`)
+
+        Returns:
+            - `httpx.Response`: The `httpx` response object.
         """
         path = f"/option/list/contracts/{request_type}"
         params = {
