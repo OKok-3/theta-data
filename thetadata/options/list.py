@@ -14,7 +14,7 @@ class OptionsList:
         self.httpx_client = client.httpx_client
 
     def symbols(self, format: str = "ndjson") -> httpx.Response:
-        """Get list of symbols from Theta Data API
+        """A symbol can be defined as a unique identifier for a stock / underlying asset. Common terms also include: root, ticker, and underlying. This endpoint returns all traded symbols for options. This endpoint is updated overnight.
 
         Args:
             format: Format of the response (default: "ndjson")
@@ -32,7 +32,9 @@ class OptionsList:
 
     def dates(self, symbol: str, expiration: str, strike: str | float, right: str, request_type: str, format: str = "ndjson") -> httpx.Response:
         """
-        Get list of dates from Theta Data API
+        Lists all dates of data that are available for an option with a given symbol, request type, and expiration.
+
+        This endpoint is updated overnight.
 
         Args:
             symbol: Symbol of the underlying asset
@@ -61,7 +63,9 @@ class OptionsList:
 
     def expirations(self, symbol: str, format: str = "ndjson") -> httpx.Response:
         """
-        Get list of expirations from Theta Data API
+        Lists all dates of expirations that are available for an option with a given symbol.
+
+        This endpoint is updated overnight.
 
         Args:
             symbol: Symbol of the underlying asset
@@ -79,7 +83,9 @@ class OptionsList:
 
     def strikes(self, symbol: str, expiration: str, format: str = "ndjson") -> httpx.Response:
         """
-        Get list of strikes from Theta Data API
+        Lists all strikes that are available for an option with a given symbol and expiration date.
+
+        This endpoint is updated overnight.
 
         Args:
             symbol: Symbol of the underlying asset
