@@ -3,7 +3,8 @@ name = "theta-data"
 version = "1.0.0"
 requires-python = ">=3.14"
 dependencies = [
-    "httpx>=0.28.1",
+    "httpx[http2]>=0.28.1",
+    "pendulum>=3.1.0",
     "polars>=1.35.2",
     "python-dotenv>=1.2.1",
     "ruff>=0.14.7",
