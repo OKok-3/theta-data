@@ -87,12 +87,13 @@ class ThetaDataClient:
             error_description = self.error_codes.filter(pl.col("HttpCode") == response.status_code).select("Description").item()
 
             raise httpx.HTTPStatusError(
-                f"HTTP {response.status_code} ({error_name}): {error_description}",
+                f"HTTP {response.status_code} ({error_name}): {error_description}. See https://docs.thetadata.us/Articles/Errors-Exchanges-Conditions/Error-Codes.html for more information.",
                 request=response.request,
                 response=response,
             ) from e
 
     def _get_error_codes(self) -> pl.DataFrame:
+        # TODO: consider converting this into a dictionary instead
         """Get error codes from Theta Data API documentation"""
         error_codes_cache_path = f"{self.cache_dir}/error_codes.parquet"
 
