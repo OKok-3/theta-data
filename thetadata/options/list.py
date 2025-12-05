@@ -96,5 +96,27 @@ class OptionsList:
         self.client.handle_http_error(response)
         return response
 
-    def contracts(self, symbol: str, date: str, format: str = "ndjson") -> httpx.Response:
-        pass
+    def contracts(self, date: str, request_type: str, symbol: str = None, format: str = "ndjson") -> httpx.Response:
+        """
+        Lists all contracts that were traded or quoted on a particular date.
+
+        If the `symbol` parameter is specified, the returned contracts will be filtered to match the symbol.
+        Multiple symbols can be specified by separating them with commas such as `symbol=AAPL,SPY,AMD`
+        This endpoint is updated real-time.
+
+        Args:
+            symbol: Symbol of the underlying asset (optional)
+            date: Date of the contract
+            request_type: Type of request ("trade" or "quote")
+            format: Format of the response (default: "ndjson")
+        """
+        path = f"/option/list/contracts/{request_type}"
+        params = {
+            "symbol": symbol,
+            "date": date,
+            "format": format,
+        }
+
+        response = self.httpx_client.get(path, params=params)
+        self.client.handle_http_error(response)
+        return response
