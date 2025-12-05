@@ -30,7 +30,15 @@ class OptionsList:
 
         return response
 
-    def dates(self, symbol: str, expiration: str, strike: str | float, right: str, request_type: str, format: str = "ndjson") -> httpx.Response:
+    def dates(
+        self,
+        symbol: str,
+        expiration: str,
+        request_type: str,
+        strike: str = "*",
+        right: str = "both",
+        format: str = "ndjson",
+    ) -> httpx.Response:
         """
         Lists all dates of data that are available for an option with a given symbol, request type, and expiration.
 
@@ -39,8 +47,8 @@ class OptionsList:
         Args:
             symbol: Symbol of the underlying asset
             expiration: Expiration date of the option
-            strike: Strike price of the option (e.g., "100.00", "$100.00", or "*" for all strikes)
-            right: Right of the option
+            strike: Strike price of the option (optional, default: "*". E.g., "100.00", "$100.00", or "*" for all strikes)
+            right: Right of the option (optional, default: "both")
             request_type: Type of request ("trade" or "quote")
             format: Format of the response (default: "ndjson")
 
