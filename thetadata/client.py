@@ -86,6 +86,11 @@ class ThetaDataClient:
         response.raise_for_status()
 
         error_codes = pl.read_csv(io.StringIO(response.text), truncate_ragged_lines=True)
+
+        # Remove all the trailing and leading whitespace
+        error_codes.columns = [col.strip() for col in error_codes.columns]
+        error_codes = error_codes.with_columns(pl.col(pl.String).exclude("HttpCode").str.strip_chars())
+
         os.makedirs(self.cache_dir, exist_ok=True)
         error_codes.write_parquet(error_codes_cache_path)
 
