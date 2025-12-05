@@ -5,6 +5,8 @@ import httpx
 import pendulum
 import polars as pl
 
+from thetadata.options import Options
+
 ERROR_CODES_URL = "https://www.dropbox.com/scl/fi/c1zbaq8e45djf5zb8cy26/ErrorCodes.csv?rlkey=ryepbxvk6zmtcwq3n2s3wrf0h&dl=1"
 
 
@@ -31,6 +33,9 @@ class ThetaDataClient:
 
     httpx_client: httpx.Client
     error_codes: pl.DataFrame
+
+    # API endpoint modules
+    options: Options
 
     def __init__(
         self,
@@ -60,6 +65,9 @@ class ThetaDataClient:
         # Initialize necessary files and directories
         os.makedirs(self.cache_dir, exist_ok=True)
         self.error_codes = self._get_error_codes()
+
+        # Initialize API endpoint modules
+        self.options = Options(self)
 
         self._print_init_info()
 
