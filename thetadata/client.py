@@ -123,7 +123,10 @@ class ThetaDataClient:
         date = pendulum.now().format("YYYY-MM-DD")
 
         response = self.httpx_client.get("/calendar/on_date", params={"date": date})
-        self.handle_http_error(response)
+        try:
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            raise ConnectionError("Failed to connect to the Theta Data terminal. Please check your terminal URL and try again.") from e
 
     def _print_init_info(self) -> None:
         # TODO: Add error code cache info (date it was downloaded, and whether it was renewed)
