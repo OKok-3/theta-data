@@ -29,7 +29,7 @@ class ThetaDataClient:
     terminal_queue_size: int
     cache_dir: str
 
-    client: httpx.Client
+    httpx_client: httpx.Client
     error_codes: pl.DataFrame
 
     def __init__(
@@ -47,7 +47,7 @@ class ThetaDataClient:
         self.cache_dir = cache_dir
 
         # Initialize the client
-        self.client = httpx.Client(
+        self.httpx_client = httpx.Client(
             base_url=self.td_terminal_url,
             timeout=self.request_timeout,
             http2=True,
@@ -85,7 +85,7 @@ class ThetaDataClient:
 
     def _test_connection(self) -> None:
         """Test the connection to the Theta Data API"""
-        self.client.get("/").raise_for_status()
+        self.httpx_client.get("/").raise_for_status()
 
     def _print_init_info(self) -> None:
         """Print initialization information"""
