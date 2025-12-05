@@ -26,8 +26,8 @@ class OptionsList:
         params = {"format": format}
 
         response = self.httpx_client.get(path, params=params)
+        self.client.handle_http_error(response)
 
-        response.raise_for_status()
         return response
 
     def dates(self, symbol: str, expiration: str, strike: float, right: str, format: str = "ndjson") -> httpx.Response:
@@ -48,7 +48,7 @@ class OptionsList:
         params = {"symbol": symbol, "format": format}
 
         response = self.httpx_client.get(path, params=params)
-        response.raise_for_status()
+        self.client.handle_http_error(response)
         return response
 
     def strikes(self, symbol: str, expiration: str, format: str = "ndjson") -> httpx.Response:
@@ -67,7 +67,7 @@ class OptionsList:
         params = {"symbol": symbol, "expiration": expiration, "format": format}
 
         response = self.httpx_client.get(path, params=params)
-        response.raise_for_status()
+        self.client.handle_http_error(response)
         return response
 
     def contracts(self, symbol: str, date: str, format: str = "ndjson") -> httpx.Response:

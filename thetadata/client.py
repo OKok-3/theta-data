@@ -59,17 +59,38 @@ class ThetaDataClient:
             limits=httpx.Limits(max_connections=self.terminal_queue_size),
         )
 
-        # Test the connection to the Theta Data API
-        self._test_connection()
-
         # Initialize necessary files and directories
         os.makedirs(self.cache_dir, exist_ok=True)
         self.error_codes = self._get_error_codes()
+
+        # Test the connection to the Theta Data API
+        self._test_connection()
 
         # Initialize API endpoint modules
         self.options = Options(self)
 
         self._print_init_info()
+
+    def handle_http_error(self, response: httpx.Response) -> None:
+        """Handle HTTP errors from Theta Data API
+
+        Args:
+            response: The HTTP response object.
+
+        Raises:
+            httpx.HTTPStatusError: If the response status code is not 200.
+        """
+        try:
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            error_name = self.error_codes.filter(pl.col("HttpCode") == response.status_code).select("ErrorName").item()
+            error_description = self.error_codes.filter(pl.col("HttpCode") == response.status_code).select("Description").item()
+
+            raise httpx.HTTPStatusError(
+                f"HTTP {response.status_code} ({error_name}): {error_description}",
+                request=response.request,
+                response=response,
+            ) from e
 
     def _get_error_codes(self) -> pl.DataFrame:
         """Get error codes from Theta Data API documentation"""
@@ -99,7 +120,9 @@ class ThetaDataClient:
     def _test_connection(self) -> None:
         """Test the connection to the Theta Data API"""
         date = pendulum.now().format("YYYY-MM-DD")
-        self.httpx_client.get("/calendar/on_date", params={"date": date}).raise_for_status()
+
+        response = self.httpx_client.get("/calendar/on_date", params={"date": date})
+        self.handle_http_error(response)
 
     def _print_init_info(self) -> None:
         """Print initialization information"""
