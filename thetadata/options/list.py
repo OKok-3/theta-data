@@ -21,8 +21,13 @@ class OptionsList:
         Returns:
             io.BytesIO: A bytes buffer containing the response.
         """
-        with self.httpx_client.stream("GET", "/option/list/symbols", params={"format": format}) as response:
-            return io.BytesIO(response.read())
+        path = "/option/list/symbols"
+        params = {"format": format}
+
+        response = self.httpx_client.get(path, params=params)
+
+        response.raise_for_status()
+        return io.BytesIO(response.read())
 
     def dates(self, symbol: str, expiration: str, strike: float, right: str, format: str = "ndjson") -> io.BytesIO:
         pass
@@ -41,8 +46,9 @@ class OptionsList:
         path = "/option/list/expirations"
         params = {"symbol": symbol, "format": format}
 
-        with self.httpx_client.stream("GET", path, params=params) as response:
-            return io.BytesIO(response.read())
+        response = self.httpx_client.get(path, params=params)
+        response.raise_for_status()
+        return io.BytesIO(response.read())
 
     def strikes(self, symbol: str, expiration: str, format: str = "ndjson") -> io.BytesIO:
         """
@@ -59,8 +65,9 @@ class OptionsList:
         path = "/option/list/strikes"
         params = {"symbol": symbol, "expiration": expiration, "format": format}
 
-        with self.httpx_client.stream("GET", path, params=params) as response:
-            return io.BytesIO(response.read())
+        response = self.httpx_client.get(path, params=params)
+        response.raise_for_status()
+        return io.BytesIO(response.read())
 
     def contracts(self, symbol: str, date: str, format: str = "ndjson") -> io.BytesIO:
         pass
