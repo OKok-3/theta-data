@@ -93,7 +93,8 @@ class ThetaDataClient:
 
     def _test_connection(self) -> None:
         """Test the connection to the Theta Data API"""
-        self.httpx_client.get("/").raise_for_status()
+        date = pendulum.now().format("YYYY-MM-DD")
+        self.httpx_client.get("/calendar/on_date", params={"date": date}).raise_for_status()
 
     def _print_init_info(self) -> None:
         """Print initialization information"""
