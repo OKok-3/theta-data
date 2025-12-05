@@ -125,7 +125,8 @@ class ThetaDataClient:
         self.handle_http_error(response)
 
     def _print_init_info(self) -> None:
-        """Print initialization information"""
+        # TODO: Add error code cache info (date it was downloaded, and whether it was renewed)
+        """Print initialization information. This is implemented for debugging purposes, especially when used in notebooks."""
         info = {
             "Setting": [
                 "Theta Data Terminal URL",
