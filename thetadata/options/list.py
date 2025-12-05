@@ -28,7 +28,21 @@ class OptionsList:
         pass
 
     def expirations(self, symbol: str, format: str = "ndjson") -> io.BytesIO:
-        pass
+        """
+        Get list of expirations from Theta Data API
+
+        Args:
+            symbol: Symbol of the underlying asset
+            format: Format of the response (default: "ndjson")
+
+        Returns:
+            io.BytesIO: A bytes buffer containing the response.
+        """
+        path = "/option/list/expirations"
+        params = {"symbol": symbol, "format": format}
+
+        with self.httpx_client.stream("GET", path, params=params) as response:
+            return io.BytesIO(response.read())
 
     def strikes(self, symbol: str, expiration: str, format: str = "ndjson") -> io.BytesIO:
         pass
