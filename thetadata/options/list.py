@@ -13,7 +13,16 @@ class OptionsList:
         self.httpx_client = client.httpx_client
 
     def symbols(self, format: str = "ndjson") -> io.BytesIO:
-        pass
+        """Get list of symbols from Theta Data API
+
+        Args:
+            format: Format of the response (default: "ndjson")
+
+        Returns:
+            io.BytesIO: A bytes buffer containing the response.
+        """
+        with self.httpx_client.stream("GET", "/option/list/symbols", params={"format": format}) as response:
+            return io.BytesIO(response.read())
 
     def dates(self, symbol: str, expiration: str, strike: float, right: str, format: str = "ndjson") -> io.BytesIO:
         pass
