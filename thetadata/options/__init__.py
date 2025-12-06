@@ -5,6 +5,7 @@ import httpx
 if TYPE_CHECKING:
     from thetadata.client import ThetaDataClient
 
+from thetadata.options.history import OptionsHistory
 from thetadata.options.list import OptionsList
 
 
@@ -19,6 +20,7 @@ class Options:
 
     Available endpoints:
         - `list`: Lists all symbols, dates, expirations, strikes, and contracts for options.
+        - `history`: Fetches historical option data for a given symbol and expiration date.
     """
 
     client: ThetaDataClient
@@ -30,3 +32,4 @@ class Options:
 
         # Initialize endpoint classes
         self.list = OptionsList(self.client)
+        self.history = OptionsHistory(self.client)
