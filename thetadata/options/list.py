@@ -7,9 +7,8 @@ if TYPE_CHECKING:
 
 
 class OptionsList:
-    """Endpoint module for the options list endpoint.
-
-    This module contains all the endpoints for the options list endpoint.
+    """
+    This module contains all the endpoints for the options list endpoint. Consult the [official documentation](https://docs.thetadata.us) for more information.
 
     Attributes:
         - `client`: The `ThetaDataClient` instance that this module belongs to.

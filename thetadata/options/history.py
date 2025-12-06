@@ -7,9 +7,15 @@ if TYPE_CHECKING:
 
 
 class OptionsHistory:
-    """Endpoint module for the options history endpoint.
+    """
+    This module contains all the endpoints for the options history endpoint. Consult the [official documentation](https://docs.thetadata.us) for more information.
 
-    This module contains all the endpoints for the options history endpoint.
+    Attributes:
+        - `client`: The `ThetaDataClient` instance that this module belongs to.
+        - `httpx_client`: The `httpx` client instance that this module uses to make requests to the Theta Data API.
+
+    Methods:
+        # TODO: add methods
     """
 
     client: ThetaDataClient
