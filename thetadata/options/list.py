@@ -1,18 +1,15 @@
-from typing import TYPE_CHECKING
-
 import httpx
 
-if TYPE_CHECKING:
-    from thetadata.client import ThetaDataClient
+from thetadata.base import Endpoint
 
 
-class OptionsList:
+class OptionsList(Endpoint):
     """
-    This module contains all the endpoints for the options list endpoint. Consult the [official documentation](https://docs.thetadata.us) for more information.
+    This class contains all the endpoints for the options list endpoint. Consult the [official documentation](https://docs.thetadata.us) for more information.
 
     Attributes:
-        - `client`: The `ThetaDataClient` instance that this module belongs to.
-        - `httpx_client`: The `httpx` client instance that this module uses to make requests to the Theta Data API.
+        - `client`: The `ThetaDataClient` instance that this class belongs to.
+        - `httpx_client`: The `httpx` client instance that this class uses to make requests to the Theta Data API.
 
     Methods:
         - `symbols`: Lists all symbols that are available for options.
@@ -21,13 +18,6 @@ class OptionsList:
         - `strikes`: Lists all strikes that are available for an option with a given symbol and expiration date.
         - `contracts`: Lists all contracts that were traded or quoted on a particular date.
     """
-
-    client: ThetaDataClient
-    httpx_client: httpx.Client
-
-    def __init__(self, client: ThetaDataClient) -> None:
-        self.client = client
-        self.httpx_client = client.httpx_client
 
     def symbols(self, format: str = "ndjson") -> httpx.Response:
         """
